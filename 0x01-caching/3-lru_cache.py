@@ -25,7 +25,6 @@ class LRUCache(BaseCaching):
         """
         if not (key is None or item is None):
             self.cache_data[key] = item
-            self.rank[key] = self.def_rank
             if (len(self.cache_data) > BaseCaching.MAX_ITEMS):
                 self.rank = dict(
                     sorted(
@@ -35,6 +34,7 @@ class LRUCache(BaseCaching):
                 discard = self.rank.popitem()
                 del self.cache_data[discard[0]]
                 print("DISCARD: {}".format(discard[0]))
+            self.rank[key] = self.def_rank
             self.def_rank += 1
 
     def get(self, key):

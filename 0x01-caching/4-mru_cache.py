@@ -42,5 +42,6 @@ class MRUCache(BaseCaching):
         """
         res = self.cache_data.get(key)
         if (res):
-            self.rank[key] += self.def_rank
+            self.def_rank += 1
+            self.rank[key] = self.def_rank
         return res

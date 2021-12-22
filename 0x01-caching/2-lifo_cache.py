@@ -5,10 +5,12 @@ LIFO caching system
 
 from base_caching import BaseCaching
 
+
 class LIFOCache(BaseCaching):
     """
     Caching that follows LIFO Cache replacement policy
     """
+
     def __init__(self):
         """
         Initialization

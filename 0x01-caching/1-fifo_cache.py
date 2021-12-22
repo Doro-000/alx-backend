@@ -5,10 +5,12 @@ FIFO caching system
 
 from base_caching import BaseCaching
 
+
 class FIFOCache(BaseCaching):
     """
     Caching that follows FIFO Cache replacement policy
     """
+
     def __init__(self):
         """
         Initialization

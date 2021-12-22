@@ -5,10 +5,12 @@ Basic Caching
 
 from base_caching import BaseCaching
 
+
 class BasicCache(BaseCaching):
     """
     Caching class with set and get methods defined
     """
+
     def put(self, key, item):
         """
         Add an item in the cache

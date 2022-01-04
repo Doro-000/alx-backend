@@ -28,8 +28,8 @@ msgstr "Bonjour monde!"
 
 #: templates/5-index.html:9
 #, python-format
-msgid "You are logged in as %(usr_name)s."
-msgstr "Vous êtes connecté en tant que %(usr_name)s."
+msgid "You are logged in as %(username)s."
+msgstr "Vous êtes connecté en tant que %(username)s."
 
 #: templates/5-index.html:11
 msgid "You are not logged in."

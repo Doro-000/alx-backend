@@ -2,7 +2,6 @@
 """
 simple flask app
 """
-import re
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
 

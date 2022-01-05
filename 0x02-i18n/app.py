@@ -2,6 +2,7 @@
 """
 simple flask app
 """
+from sys import _current_frames
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
 from pytz import timezone, UnknownTimeZoneError
@@ -32,9 +33,10 @@ babel = Babel(app)
 def index():
     """simple index page"""
     user = g.get("user")
+    tz = g.get("tz")
     if user:
-      return render_template("7-index.html", username=user["name"])
-    return render_template("7-index.html", username=None)
+      return render_template("index.html", username=user["name"], current_time=tz)
+    return render_template("index.html", username=None, current_time=tz)
 
 
 def get_user():
@@ -58,6 +60,10 @@ def before_request():
     user = get_user()
     if user:
         g.user = user
+    tz = get_timezone()
+    if tz:
+      g.timezone = tz
+    
 
 
 @babel.localeselector
@@ -65,7 +71,10 @@ def get_locale():
     """select best lang"""
     locale_param = request.args.get("locale")
     locale_head = request.headers.get("locale")
-    locale_user = g.users.get("locale")
+    try:
+      locale_user = g.user.get("locale")
+    except:
+      locale_user = None
     if locale_param and locale_param in app.config["LANGUAGES"]:
         return locale_param
     elif locale_user and locale_user in app.config["LANGUAGES"]:
@@ -81,14 +90,15 @@ def get_timezone():
     try:
         locale_param = request.args.get("timezone")
         timezone(locale_param)
-    except UnknownTimeZoneError:
+    except:
         locale_param = None
 
     try:
-        locale_user = g.users.get("timezone")
+        locale_user = g.user.get("timezone")
         timezone(locale_user)
-    except UnknownTimeZoneError:
+    except:
         locale_user = None
+
     if locale_param:
         return locale_param
     elif locale_user:

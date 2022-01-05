@@ -33,7 +33,7 @@ def index():
     """simple index page"""
     user = g.get("user")
     if user:
-      return render_template("7-index.html", username=user["name"])
+        return render_template("7-index.html", username=user["name"])
     return render_template("7-index.html", username=None)
 
 
@@ -92,7 +92,7 @@ def get_timezone():
     if locale_param:
         return locale_param
     elif locale_user:
-        return locale_user    
+        return locale_user
     else:
         return app.config["BABEL_DEFAULT_TIMEZONE"]
 

@@ -35,7 +35,10 @@ def index():
     user = g.get("user")
     tz = g.get("tz")
     if user:
-      return render_template("index.html", username=user["name"], current_time=tz)
+        return render_template(
+            "index.html",
+            username=user["name"],
+            current_time=tz)
     return render_template("index.html", username=None, current_time=tz)
 
 
@@ -62,8 +65,7 @@ def before_request():
         g.user = user
     tz = get_timezone()
     if tz:
-      g.timezone = tz
-    
+        g.timezone = tz
 
 
 @babel.localeselector
@@ -72,9 +74,9 @@ def get_locale():
     locale_param = request.args.get("locale")
     locale_head = request.headers.get("locale")
     try:
-      locale_user = g.user.get("locale")
-    except:
-      locale_user = None
+        locale_user = g.user.get("locale")
+    except BaseException:
+        locale_user = None
     if locale_param and locale_param in app.config["LANGUAGES"]:
         return locale_param
     elif locale_user and locale_user in app.config["LANGUAGES"]:
@@ -90,19 +92,19 @@ def get_timezone():
     try:
         locale_param = request.args.get("timezone")
         timezone(locale_param)
-    except:
+    except BaseException:
         locale_param = None
 
     try:
         locale_user = g.user.get("timezone")
         timezone(locale_user)
-    except:
+    except BaseException:
         locale_user = None
 
     if locale_param:
         return locale_param
     elif locale_user:
-        return locale_user    
+        return locale_user
     else:
         return app.config["BABEL_DEFAULT_TIMEZONE"]
 

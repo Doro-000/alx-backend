@@ -33,7 +33,7 @@ def index():
     """simple index page"""
     user = g.get("user")
     if user:
-      return render_template("6-index.html", username=user["name"])
+        return render_template("6-index.html", username=user["name"])
     return render_template("6-index.html", username=None)
 
 
@@ -74,6 +74,7 @@ def get_locale():
         return locale_head
     else:
         return request.accept_languages.best_match(app.config["LANGUAGES"])
+
 
 if __name__ == "__main__":
     app.run()

@@ -30,7 +30,10 @@ babel = Babel(app)
 @app.route("/")
 def index():
     """simple index page"""
-    return render_template("5-index.html", username=g.get("user"))
+    user = g.get("user")
+    if user:
+      return render_template("5-index.html", username=user["name"])
+    return render_template("5-index.html", username=None)
 
 
 def get_user():

@@ -76,7 +76,7 @@ def get_locale():
     locale_head = request.headers.get("locale")
     locale_user = None
     if g.get("user"):
-      locale_user = g.user.get("locale")
+        locale_user = g.user.get("locale")
     if locale_param and locale_param in app.config["LANGUAGES"]:
         return locale_param
     elif locale_user and locale_user in app.config["LANGUAGES"]:

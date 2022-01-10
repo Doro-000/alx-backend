@@ -2,10 +2,11 @@
 """
 simple flask app
 """
-from sys import _current_frames
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
 from pytz import timezone, UnknownTimeZoneError
+from datetime import datetime
+
 
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
@@ -38,7 +39,7 @@ def index():
         return render_template(
             "index.html",
             username=user["name"],
-            current_time=tz)
+            current_time=datetime.now(tz=tz).ctime())
     return render_template("index.html", username=None, current_time=tz)
 
 
@@ -73,10 +74,9 @@ def get_locale():
     """select best lang"""
     locale_param = request.args.get("locale")
     locale_head = request.headers.get("locale")
-    try:
-        locale_user = g.user.get("locale")
-    except BaseException:
-        locale_user = None
+    locale_user = None
+    if g.get("user"):
+      locale_user = g.user.get("locale")
     if locale_param and locale_param in app.config["LANGUAGES"]:
         return locale_param
     elif locale_user and locale_user in app.config["LANGUAGES"]:
@@ -92,13 +92,13 @@ def get_timezone():
     try:
         locale_param = request.args.get("timezone")
         timezone(locale_param)
-    except BaseException:
+    except UnknownTimeZoneError:
         locale_param = None
 
     try:
         locale_user = g.user.get("timezone")
         timezone(locale_user)
-    except BaseException:
+    except UnknownTimeZoneError:
         locale_user = None
 
     if locale_param:

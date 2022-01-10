@@ -32,7 +32,7 @@ def index():
     """simple index page"""
     user = g.get("user")
     if user:
-      return render_template("5-index.html", username=user["name"])
+        return render_template("5-index.html", username=user["name"])
     return render_template("5-index.html", username=None)
 
 

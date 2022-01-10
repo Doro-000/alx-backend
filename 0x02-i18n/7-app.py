@@ -65,7 +65,9 @@ def get_locale():
     """select best lang"""
     locale_param = request.args.get("locale")
     locale_head = request.headers.get("locale")
-    locale_user = g.users.get("locale")
+    locale_user = None
+    if g.get("user"):
+      locale_user = g.user.get("locale")
     if locale_param and locale_param in app.config["LANGUAGES"]:
         return locale_param
     elif locale_user and locale_user in app.config["LANGUAGES"]:
@@ -89,6 +91,7 @@ def get_timezone():
         timezone(locale_user)
     except UnknownTimeZoneError:
         locale_user = None
+
     if locale_param:
         return locale_param
     elif locale_user:
